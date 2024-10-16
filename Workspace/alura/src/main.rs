@@ -21,6 +21,9 @@ fn main(){
     loops(5);
     loop_for(4);
     match_stat();
+    ownership();
+    pattern_matching();
+    erros();
 }
 fn shadowing(){
     let a:i32 = 100;
@@ -86,4 +89,28 @@ fn match_stat(){
         _ => "Desconhecido",
     };
     println!("O proposito da {} é = {}", linguagem, proposito);
+}
+fn ownership(){
+    let mut uma_string = String::from("Victor"); //Aqui a varivael "uma string" se torna dona do valor de memoria na heap  
+    rouba(&mut uma_string);   // se executassemos sem a referencia ao executar a posse do endereço de memoria seria da variavel "outra_string"
+    println!("{}", uma_string);        // mas como passamos como referencia & ele somanete empresta o valor de memoria nao fazendo uma copia e depois que a outra variavel terminar o uso, ela devolve
+}
+fn rouba(outra_string: &mut String){   
+    outra_string.push_str(" Martinho");                                     //referencias por padrão sao imutaveis alem da imutabilidade das variaveis
+    println!("{}", outra_string);       //porem com um macro eu cosigo mudar a string e adicionar algo nela
+                                        // para isso eu preciso transformar a referencia em mutavel usando &mut e tambem passar ela como mutavel usando da mesma sintaxe
+}                                          // mas para referenciar uma variavel de forma mutavel a variavel tambem precisa ser mutavel
+fn pattern_matching(){
+    for x in 1..=20{
+        println!("{} = {}",x , match x {
+            1 => "Pouco",
+            2 | 3 | 4 => "um tanttinho",
+            5..11 => "um tanto",
+            _ if x % 7 == 0 => "Esse é  divisivel por 7",
+            _ => "Muito"
+        });
+    }
+}
+fn erros(){
+    
 }
