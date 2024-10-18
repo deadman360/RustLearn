@@ -1,4 +1,4 @@
 [workspace]
-members = [ "alura",
+members = [ "alura", "alura_curso_02",
     "hello_world",
 ]

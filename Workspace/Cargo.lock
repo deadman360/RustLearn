@@ -7,5 +7,9 @@ name = "alura"
 version = "0.1.0"
 
 [[package]]
+name = "alura_curso_02"
+version = "0.1.0"
+
+[[package]]
 name = "hello_world"
 version = "0.1.0"
