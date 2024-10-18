@@ -32,6 +32,7 @@ fn matriz(){
     }
 }
 
+#[allow(dead_code)]
 enum DiaDaSemana {
     Domingo,
     Segunda,
@@ -41,11 +42,13 @@ enum DiaDaSemana {
     Sexta,
     Sabado
 }
+#[allow(dead_code)]
 enum Color {
     Red,
     Green,
     Blue,
-    RGB(u8,u8,u8)
+    RGB(u8,u8,u8),
+    Cymk{cyan: u8, yellow: u8, magenta: u8, black: u8}
 }
 fn eh_fim_de_semana(dia_da_semana: DiaDaSemana) -> bool{
     match dia_da_semana {
@@ -54,12 +57,14 @@ fn eh_fim_de_semana(dia_da_semana: DiaDaSemana) -> bool{
     }
 }
 fn cores() -> &'static str{
-    let cor: Color = Color::RGB(0,0,0);
+    let cor: Color = Color::Cymk { cyan: 40, yellow: 234, magenta: 43, black: 255};
     match cor {
         Color::Blue => "Azul",
         Color::Green => "Verde",
         Color::Red => "Vermelho",
-        Color::RGB(0, 0, 0) => "Preto",
-        Color::RGB(_,_,_) => "RGB DESCONHECIDO" 
+        Color::RGB(0, 0, 0) | Color::Cymk{cyan: _, yellow: _, magenta: _, black: 255}=> "Preto",
+        Color::RGB(_,_,_) => "RGB DESCONHECIDO",
+        Color::Cymk{cyan: _, yellow: _, magenta: _, black: _} => "Cymk desconhecido"
+
     }
 }
