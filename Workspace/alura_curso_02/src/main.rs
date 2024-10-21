@@ -20,6 +20,7 @@ fn main() {
     println!("{}",cores());
     opcional();
     vectors();
+    structs();
 
 }
 
@@ -124,4 +125,22 @@ fn vectors(){
     // para criar um veto com capacidade especifica para evitar uso excessivo de memoria se usa a sintaxe Vec::with_capacity()
     let mut vetor_capacitado: Vec<i32> = Vec::with_capacity(11);
     println!("{}", vetor_capacitado.capacity());
+}
+struct Registrado {
+    nome: &'static str,
+    sobrenome: &'static str,
+    idade: u8
+}
+struct Cliente {
+    pessoa: Registrado,
+    id: i32
+}
+fn structs(){
+    let eu: Registrado = Registrado{
+        nome: "Victor",
+        sobrenome: "Morto",
+        idade:254
+    };
+    let eu_Cliente: Cliente = Cliente { pessoa: eu, id: 3452 };
+    println!("Nome: {} {}, idade: {},ID: {} ", eu_Cliente.pessoa.nome, eu_Cliente.pessoa.sobrenome, eu_Cliente.pessoa.idade, eu_Cliente.id);
 }
