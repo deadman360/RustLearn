@@ -18,7 +18,11 @@ fn main() {
     matriz();
     println!("É fim de semana ? {}", eh_fim_de_semana(DiaDaSemana::Domingo));
     println!("{}",cores());
+    opcional();
+    vectors();
+
 }
+
 fn matriz(){
     let matriz:[[f32; 3]; 2] = [
         [0.1,0.2,0.3],
@@ -67,4 +71,57 @@ fn cores() -> &'static str{
         Color::Cymk{cyan: _, yellow: _, magenta: _, black: _} => "Cymk desconhecido"
 
     }
+}
+
+fn opcional(){
+    let opcao: Option<&'static str> = opcao("QQRCOIDSA");
+    if let Some(valor) = opcao  {           // if let é um eslito de match statment que podemos passar um padrao, nesse caso Some(valor) e um valor para match
+        println!("{}", valor);
+    } 
+}
+fn opcao(init: &'static str) -> Option<&'static str> {      //Option é um estilo de monada mas não é uma propriamente dita mas é um tipo em rust completamente similar a uma monada
+    match init{
+        "200:OK" => Some("Deu Certo"),
+        "404:NOT_FOUND" => Some("Vish, Não encontramos sua Pagina "),
+        _ => None
+    }
+}
+// Options são enums gericos em rust Option<T> essa sintaxe <T> representa um tipo qualquer para fazer um template para quando informado o tipo
+// como em Option<&'static str> o compilador faça uma enum com o tipo informado 
+fn vectors(){
+    //vetores já são alocados com certa quantidade de memória
+    let mut novo_vetor: Vec<u8> = Vec::new();//vetores sempre devem ter o tipo especificado na sintaxe Vec<u8>
+    novo_vetor.push(10);
+    println!("{:?}", novo_vetor);
+    novo_vetor.push(11);
+    println!("{:?}", novo_vetor);
+
+    let mut vetor_com_valores: Vec<u8> = vec![1,2,3,4,5,6,7,8,9,10];
+    println!("{:?}",vetor_com_valores);
+    println!("Valor 1 = {}", vetor_com_valores[0]); // para acessar valores em vectores pode ser usado indices mas como os valores são dinamicos um end de memoria de um vec pode estar na frente de um outro e isso pode dar problema 
+    //podemos usar outros metodos para acessar valores, pois alem desse problema acima se eu tentar pegar um indice onde não existe um valor por exemplo 50 ele compila e da panic
+    println!("Valor 50 = {}", match vetor_com_valores.get(50){      // nesse caso esse metodo .get retorna um option em vez de retornar diretamente um valor
+        Some(valor) => *valor, //porem como o tipo option é um generic a variavel valor é uma referencia para o tipo do vetor entã o rust não copia o valor do vetor para a variavel e somente faz com que a variaavel aponte para o valor no vetor 
+        None => 0 
+    });
+    println!("{:?}", vetor_com_valores.len());
+    //metodo pop ele remove retorna o ultimo valor do vetor e remove ele do vetor, lembrando que ele retorna um opton entao use if let para acessar o valor
+    /*
+    while let Some(ultimo) = vetor_com_valores.pop(){
+        println!("Valor removido {}", ultimo);
+    }
+    */
+    // se for usado com metodo for ele pega o valor pois ele transforma o vec em um iterador, então é necessario usar a referencia para somente emprestar o valor do vetor para ele 
+    for item in &vetor_com_valores{
+        println!("{}", item)
+    }
+    println!("{:?}", vetor_com_valores);
+    /*vetores tem uma capacidade ja determinada na heap quando criados, mesmo que sem nenhum valor, toda vez que a capacidade é excedida
+    ele dobra a capacidade realocando a memoria, pois fazendo um por um ele teria que realocar a memoria a cada adição e alocar memoria na heap émuito caro */
+    println!("{}", vetor_com_valores.capacity());
+    vetor_com_valores.push(11);
+    println!("{}", vetor_com_valores.capacity());
+    // para criar um veto com capacidade especifica para evitar uso excessivo de memoria se usa a sintaxe Vec::with_capacity()
+    let mut vetor_capacitado: Vec<i32> = Vec::with_capacity(11);
+    println!("{}", vetor_capacitado.capacity());
 }
