@@ -13,3 +13,7 @@ version = "0.1.0"
 [[package]]
 name = "hello_world"
 version = "0.1.0"
+
+[[package]]
+name = "pesquisa_binaria"
+version = "0.1.0"

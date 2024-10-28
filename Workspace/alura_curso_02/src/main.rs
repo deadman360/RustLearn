@@ -123,7 +123,7 @@ fn vectors(){
     vetor_com_valores.push(11);
     println!("{}", vetor_com_valores.capacity());
     // para criar um veto com capacidade especifica para evitar uso excessivo de memoria se usa a sintaxe Vec::with_capacity()
-    let mut vetor_capacitado: Vec<i32> = Vec::with_capacity(11);
+    let vetor_capacitado: Vec<i32> = Vec::with_capacity(11);
     println!("{}", vetor_capacitado.capacity());
 }
 struct Registrado {
@@ -135,12 +135,29 @@ struct Cliente {
     pessoa: Registrado,
     id: i32
 }
+impl Cliente{                   // impl Cliente diz que todas funções dentro desse mesmo bloco são métodos
+    fn aniversario(&mut self, desconto: i32){
+        println!("Ola CLiente {}, Voce recebeu um desconto de {}% na sua proxima compra, Feliz {} anos!", self.id, desconto, self.pessoa.idade+1);
+        self.pessoa.idade += 1
+    }        
+    /*self é uma referencia ao valor que chamou esse metodo
+    como em rust referencias são por padrão imutaveis se eu declarar
+    o metodo com self sendo uma referencia mutavel como no caso acima
+    nao poderei usar esse metodo para variaveis imutaveis */
+}
 fn structs(){
     let eu: Registrado = Registrado{
         nome: "Victor",
         sobrenome: "Morto",
         idade:254
     };
-    let eu_Cliente: Cliente = Cliente { pessoa: eu, id: 3452 };
-    println!("Nome: {} {}, idade: {},ID: {} ", eu_Cliente.pessoa.nome, eu_Cliente.pessoa.sobrenome, eu_Cliente.pessoa.idade, eu_Cliente.id);
+    let mut eu_cliente: Cliente = Cliente { pessoa: eu, id: 3452 };
+    println!("Nome: {} {}, idade: {},ID: {} ", eu_cliente.pessoa.nome, eu_cliente.pessoa.sobrenome, eu_cliente.pessoa.idade, eu_cliente.id);
+    eu_cliente.aniversario(20);
+    println!("\n\n\n Cliente Idade == {} anos", eu_cliente.pessoa.idade);
+    /*println!("\n\n\n Pessoa Idade == {}", eu.idade); esse codigo simplesmente nao roda
+    porque ele por ownership o dono do valor e "eu" virou o eu_cliente, se eu tento implementar um
+    ponteiro dentro da struct, ele nao entende pois a struct deixa implicito que recebe uma variavel e nao um ponteiro
+    por isso tambem nao preciso declarar a varaivelk "eu" como mutavel*/
 }
+
