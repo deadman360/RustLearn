@@ -1,8 +1,12 @@
 use chrono::{Datelike, Local, NaiveDate};
 use std::io;
 fn main() {
-    let idade: i32 = calcula_idade(pega_input());
+    let idade: i32 = 0; //calcula_idade(pega_input());
     println!("{} anos", idade);
+    println!("{}", is_even(890309489));
+    println!("{}ºF", converte_celsius(0f32));
+    println!("{}", fatorial(10, 1));
+    println!("{}", fibonacci(0,1,9))
 }
 
 fn calcula_idade(data_informada: NaiveDate) -> i32 {
@@ -16,7 +20,6 @@ fn calcula_idade(data_informada: NaiveDate) -> i32 {
     } else {
         return data_agora.year() - data_informada.year() - 1;
     }
-    
 }
 fn pega_input() -> NaiveDate {
     /*Aqui eu Inicializo as variaveis do input */
@@ -35,9 +38,33 @@ fn pega_input() -> NaiveDate {
     io::stdin().read_line(&mut input2).expect("Falha");
     println!(" e o ano??");
     io::stdin().read_line(&mut input3).expect("Falha");
-    
+
     let dia: u32 = input1.trim().parse().unwrap();
     let mes: u32 = input2.trim().parse().unwrap();
     let ano: i32 = input3.trim().parse().unwrap();
     NaiveDate::from_ymd_opt(ano, mes, dia).unwrap()
+}
+
+fn is_even(num: i32) -> &'static str {
+    match num % 2 {
+        1 => "Impar",
+        0 => "Par",
+        _ => "Desconhecido",
+    }
+}
+
+fn converte_celsius(celsius: f32) -> f32 {
+    celsius * (9f32 / 5f32) + 32f32
+}
+fn fatorial(n: i64, counter: i64) -> i64 {
+    match n {
+        1 => counter,
+        _ => fatorial(n - 1, counter  * n ),
+    }
+}
+fn fibonacci(n1: i64, n2: i64, posicao_desejada: u32) -> i64{
+        match posicao_desejada{
+            1 => n2,
+            _ => fibonacci(n2, n1+ n2, posicao_desejada -1 )
+        }
 }
