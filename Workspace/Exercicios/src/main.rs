@@ -6,7 +6,7 @@ fn main() {
     println!("{}", is_even(890309489));
     println!("{}ºF", converte_celsius(0f32));
     println!("{}", fatorial(10, 1));
-    println!("{}", fibonacci(0,1,9))
+    println!("{}", fibonacci(9));
 }
 
 fn calcula_idade(data_informada: NaiveDate) -> i32 {
@@ -62,9 +62,12 @@ fn fatorial(n: i64, counter: i64) -> i64 {
         _ => fatorial(n - 1, counter  * n ),
     }
 }
-fn fibonacci(n1: i64, n2: i64, posicao_desejada: u32) -> i64{
-        match posicao_desejada{
-            1 => n2,
-            _ => fibonacci(n2, n1+ n2, posicao_desejada -1 )
+fn fibonacci(posicao_desejada: u32) -> i64{
+        let (mut n1, mut n2) = (0i64, 1i64);
+        for _ in 1..posicao_desejada{
+            let novo_n: i64 = n1+n2;
+            n1 = n2;
+            n2 = novo_n;
         }
+        n2
 }
